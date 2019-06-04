@@ -1,7 +1,5 @@
 package abstshop2.service;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +23,10 @@ public class CustomerService {
     	return repo.findByName(name);
     }
     
-    public boolean exists(String name) {
-    	return get(name) != null;
-    }
+    public boolean exists(String name) { return get(name) != null; }
+    
     public boolean exists(Customer customer) { return exists(customer.name()); }
+    
+    public boolean hasCustomers() { return repo.count() > 0; }
     
 }
