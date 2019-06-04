@@ -1,5 +1,7 @@
 package abstshop2.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,7 @@ public class CustomerService {
     
     public void add(Customer customer)
     {
-    	if(!exists(customer.name())) {
+    	if(!exists(customer.getName())) {
     		repo.save(customer);
     	}
     }
@@ -25,8 +27,10 @@ public class CustomerService {
     
     public boolean exists(String name) { return get(name) != null; }
     
-    public boolean exists(Customer customer) { return exists(customer.name()); }
+    public boolean exists(Customer customer) { return exists(customer.getName()); }
     
     public boolean hasCustomers() { return repo.count() > 0; }
+    
+    public List<Customer> findAll() { return repo.findAll(); }
     
 }

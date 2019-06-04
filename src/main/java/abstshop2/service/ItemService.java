@@ -1,5 +1,7 @@
 package abstshop2.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,4 +17,6 @@ public class ItemService {
     public void add(Item item) { repo.save(item); }
     
     public boolean hasItems() { return repo.count() > 0; }
+    
+    public List<Item> findAll() { return repo.findAll(); }
 }

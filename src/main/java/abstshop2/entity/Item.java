@@ -31,10 +31,17 @@ public class Item {
 		this.buyer = null;
 	}
 	
-	public Long id() { return id; }
-	public int cost() { return cost; }
-	public String shape() { return shape; }
-	public String color() { return color; }
-	public Customer buyer() { return buyer; }
+	public Long getId() { return id; }
+	public int getCost() { return cost; }
+	public String getShape() { return shape; }
+	public String getColor() { return color; }
+	public Customer getBuyer() { return buyer; }
 	public void setBuyer(Customer customer) { this.buyer = buyer; }
+	
+	@Override
+	public String toString()
+	{
+		String buyerStr = buyer == null ? "None" : buyer.getName();
+		return "id: "+id+" cost: "+cost+" shape: "+shape+" color: "+color+" buyer: "+buyerStr;
+	}
 }

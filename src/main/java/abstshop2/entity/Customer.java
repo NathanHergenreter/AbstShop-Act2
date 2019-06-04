@@ -43,11 +43,18 @@ public class Customer {
     	this.credits = credits;
     }
     
-    public String name() { return name; }
-    public int credits() { return credits; }
+    public Long getId() { return id; }
+    public String getName() { return name; }
+    public int getCredits() { return credits; }
     public void setCredits(int credits) { this.credits = credits; }
     public void modCredits(int val) { credits += val; }
-    public List<Item> purchases() { return purchases; }
-    public Item purchase(int idx) { return purchases.get(idx); }
+    public List<Item> getPurchases() { return purchases; }
+    public Item getPurchase(int idx) { return purchases.get(idx); }
     public void addPurchase(Item purchase) { purchases.add(purchase); }
+    
+    @Override
+    public String toString()
+    {
+    	return "id: "+id+" name: "+name+" credits: "+credits;
+    }
 }
