@@ -20,7 +20,7 @@ public class CustomersController {
 	
     @GetMapping("/all")
     @ResponseBody
-    public List<Customer> allCustomers() 
+    public List<Customer> all() 
     {
     	return service.findAll();
     }
