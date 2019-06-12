@@ -4,14 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import abstshop2.entity.ColorPreference;
 import abstshop2.entity.Customer;
 import abstshop2.entity.Item;
+import abstshop2.entity.ShapePreference;
 
 public class Generator {
 	
 	private Random rng;
 	private List<String> shapes;
 	private List<String> colors;
+	private int maxPatience = 5;
+	private int minWeight = -2;
+	private int maxWeight = 2;
 	
 	public Generator() 
 	{
@@ -26,11 +31,19 @@ public class Generator {
 		
 		for(int i = 0; i < numCustomers; i++)
 		{
+			List<ShapePreference> shapePreferences = genShapePreferences();
+			List<ColorPreference> colorPreferences = genColorPreferences();
+			
 			String name = "";
 			for(int j = 0; j < 4; j++) { name += (char) (rng.nextInt(26) + 97); }
 			name += formattedInt();
 			int credits = rng.nextInt(maxCredits-minCredits) + minCredits;
-			ret.add(new Customer(name, credits));
+			Customer next = new Customer(name, credits, rng.nextInt(maxPatience));
+			
+			for(ShapePreference pref : shapePreferences) { next.addShapePreference(pref); }
+			for(ColorPreference pref : colorPreferences) { next.addColorPreference(pref); }
+			
+			ret.add(next);
 		}
 		
 		return ret;
@@ -75,6 +88,42 @@ public class Generator {
 		
 		ret.add("Blue"); ret.add("Red"); ret.add("Yellow"); ret.add("Green"); ret.add("Orange");
 		ret.add("Purple"); ret.add("White"); ret.add("Grey"); ret.add("Black");
+		
+		return ret;
+	}
+	
+	private List<ShapePreference> genShapePreferences() 
+	{
+		List<ShapePreference> ret = new ArrayList<ShapePreference>();
+		
+		List<Integer> remShapes = new ArrayList<Integer>();
+		for(int i = 0; i < shapes.size(); i++) { remShapes.add(new Integer(i)); }
+		
+		int num = rng.nextInt(shapes.size());
+		while(num > 0) {
+			int idx = rng.nextInt(remShapes.size());
+			ret.add(new ShapePreference(shapes.get(idx), rng.nextInt(maxWeight-minWeight+1)+minWeight));
+			remShapes.remove(idx);
+			num--;
+		}
+		
+		return ret;
+	}
+
+	private List<ColorPreference> genColorPreferences() 
+	{
+		List<ColorPreference> ret = new ArrayList<ColorPreference>();
+		
+		List<Integer> remColors = new ArrayList<Integer>();
+		for(int i = 0; i < colors.size(); i++) { remColors.add(new Integer(i)); }
+		
+		int num = rng.nextInt(colors.size());
+		while(num > 0) {
+			int idx = rng.nextInt(remColors.size());
+			ret.add(new ColorPreference(colors.get(idx), rng.nextInt(maxWeight-minWeight+1)+minWeight));
+			remColors.remove(idx);
+			num--;
+		}
 		
 		return ret;
 	}

@@ -7,6 +7,15 @@
     
     <body>
         <h1 th:text="${customer.name}"></h1>
+        
+        <table>
+        	<tbody>
+        		<tr>
+        			<a>Number of Credits: </a>
+        			<a th:text="${customer.credits}">text</a>
+        		</tr>
+        	</tbody>
+        </table>
     </body>
     
 </html>
