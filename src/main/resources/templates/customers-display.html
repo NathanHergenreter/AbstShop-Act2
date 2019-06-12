@@ -1,0 +1,43 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+    <head>
+        <title>AbstShop</title>
+        <link rel="stylesheet" type="text/css" href="../static/css/customers-display.css" th:href="@{/css/customers-display.css}" />
+    </head>
+    
+    <body>
+          <table class="customers-table">
+          	<tbody>
+	            <tr th:if="${customers.empty}">
+	            	<td colspan="4"> No Present Customers </td>
+	       		</tr>
+          		<tr th:each="customer, iStat : ${customers}">
+          			<td>
+          				<table class="customer">
+			            		<thead>
+					                <tr>
+					                    <th>ID</th>
+					                    <th>Name</th>
+					                    <th>Credits</th>
+					                </tr>
+			            		</thead>
+		            			<tbody>
+		                			<tr>
+					                    <td><span th:text="${customer.id}" /></td>
+					                    <td><span th:text="${customer.name}" /></td>
+					                    <td><span th:text="${customer.credits}" /></td>
+					                    <td>
+					                    	<form th:action="@{/customers/customer/{id}(id=${customer.id})}">
+									         <button type="submit">Customer Page</button>
+									      </form>
+					                    </td>
+				                	</tr>
+		            			</tbody>
+	            			</table>
+            			</td>
+            		</tr>
+           		</tbody>
+        	</table>
+    </body>
+    
+</html>

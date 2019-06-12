@@ -1,40 +1,48 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 
     <head>
-        <title>AbstShop - Available Items</title>
+        <title>AbstShop</title>
         <link rel="stylesheet" type="text/css" href="../static/css/items-display.css" th:href="@{/css/items-display.css}" />
     </head>
     
     <body>
-          <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Shape</th>
-                    <th>Color</th>
-                    <th>Cost</th>
-                </tr>
-            </thead>
-            <tbody>
+          <table class="items-table">
+          	<tbody>
 	            <tr th:if="${items.empty}">
 	            	<td colspan="4"> No Items Available </td>
 	       		</tr>
-                <tr th:each="item : ${items}">
-                    <td><span th:text="${item.id}" /></td>
-                    <td><span th:text="${item.shape}" /></td>
-                    <td th:if="${item.color == 'Blue'}" class="color-blue"><span/></td>
-                    <td th:if="${item.color == 'Red'}" class="color-red"><span/></td>
-                    <td th:if="${item.color == 'Yellow'}" class="color-yellow"><span/></td>
-                    <td th:if="${item.color == 'Green'}" class="color-green"><span/></td>
-                    <td th:if="${item.color == 'Orange'}" class="color-orange"><span/></td>
-                    <td th:if="${item.color == 'Purple'}" class="color-purple"><span/></td>
-                    <td th:if="${item.color == 'White'}" class="color-white"><span/></td>
-                    <td th:if="${item.color == 'Grey'}" class="color-grey"><span/></td>
-                    <td th:if="${item.color == 'Black'}" class="color-black"><span/></td>
-                    <td><span th:text="${item.cost}" /></td>
-                </tr>
-            </tbody>
-        </table>
+          		<tr th:each="item, iStat : ${items}">
+          			<td>
+          				<table class="item">
+			            		<thead>
+					                <tr>
+					                    <th>ID</th>
+					                    <th>Shape</th>
+					                    <th>Color</th>
+					                    <th>Cost</th>
+					                </tr>
+			            		</thead>
+		            			<tbody>
+		                			<tr>
+					                    <td><span th:text="${item.id}" /></td>
+					                    <td><span th:text="${item.shape}" /></td>
+					                    <td th:if="${item.color == 'Blue'}" class="color-blue"><span/></td>
+					                    <td th:if="${item.color == 'Red'}" class="color-red"><span/></td>
+					                    <td th:if="${item.color == 'Yellow'}" class="color-yellow"><span/></td>
+					                    <td th:if="${item.color == 'Green'}" class="color-green"><span/></td>
+					                    <td th:if="${item.color == 'Orange'}" class="color-orange"><span/></td>
+					                    <td th:if="${item.color == 'Purple'}" class="color-purple"><span/></td>
+					                    <td th:if="${item.color == 'White'}" class="color-white"><span/></td>
+					                    <td th:if="${item.color == 'Grey'}" class="color-grey"><span/></td>
+					                    <td th:if="${item.color == 'Black'}" class="color-black"><span/></td>
+					                    <td><span th:text="${item.cost}" /></td>
+				                	</tr>
+		            			</tbody>
+	            			</table>
+            			</td>
+            		</tr>
+           		</tbody>
+        	</table>
     </body>
     
 </html>

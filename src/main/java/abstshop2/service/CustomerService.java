@@ -25,6 +25,10 @@ public class CustomerService {
     	return repo.findByName(name);
     }
     
+    public Customer get(long id) {
+    	return repo.findById(id).get();
+    }
+    
     public boolean exists(String name) { return get(name) != null; }
     
     public boolean exists(Customer customer) { return exists(customer.getName()); }

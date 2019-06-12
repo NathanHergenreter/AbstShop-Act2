@@ -1,0 +1,11 @@
+.customers-table {
+  width: 100%;
+  margin: 8px;
+  padding: 8px 10px;
+  overflow-wrap: break-word;
+}
+
+.customer {
+  width: 100px;
+  display: inline-table;
+}
