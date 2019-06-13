@@ -25,16 +25,13 @@ public class Customer {
     @Column(nullable = false, unique = true)
     private String name;
     
+    private int baseCredits;
     private int credits;
     
     @Cascade(CascadeType.ALL)
     @OneToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private BotAI ai;
-    
-//    @Cascade({CascadeType.ALL})
-//    @OneToMany(mappedBy = "buyer")
-//    private List<Item> items = new ArrayList<Item>();
 
     @Cascade({CascadeType.ALL})
     @OneToMany(mappedBy = "buyer")
@@ -44,11 +41,13 @@ public class Customer {
     
     public Customer(String name) {
     	this.name = name;
+    	this.baseCredits = 0;
     	this.credits = 0;
     }
     
     public Customer(String name, int credits) {
     	this.name = name;
+    	this.baseCredits = credits;
     	this.credits = credits;
     }
     
@@ -59,16 +58,23 @@ public class Customer {
     
     public Long getId() { return id; }
     public String getName() { return name; }
+    public int getBaseCredits() { return baseCredits; }
+    public void setBaseCredits(int credits) { this.baseCredits = credits; }
     public int getCredits() { return credits; }
     public void setCredits(int credits) { this.credits = credits; }
     public void modCredits(int val) { credits += val; }
-//    public List<Item> getItem() { return items; }
-//    public Item getItem(int idx) { return items.get(idx); }
-//    public void addItem(Item item) { items.add(item); }
     public List<Purchase> getPurchases() { return purchases; }
     public Purchase getPurchase(int idx) { return purchases.get(idx); }
     public void addPurchase(Purchase purchase) { purchases.add(purchase); purchase.setBuyer(this); }
     public BotAI getAI() { return ai; }
     public void setAI(BotAI ai) { this.ai = ai; }
-    
+    public boolean isBot() { return ai != null; }
+
+//  @Cascade({CascadeType.ALL})
+//  @OneToMany(mappedBy = "buyer")
+//  private List<Item> items = new ArrayList<Item>();
+
+//  public List<Item> getItem() { return items; }
+//  public Item getItem(int idx) { return items.get(idx); }
+//  public void addItem(Item item) { items.add(item); }
 }

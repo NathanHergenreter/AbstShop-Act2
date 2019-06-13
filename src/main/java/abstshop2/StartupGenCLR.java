@@ -18,6 +18,7 @@ import abstshop2.util.Generator;
 @Component
 public class StartupGenCLR implements CommandLineRunner{
 
+	private boolean enabled = true;
 	private int numBots = 50;
 	private int numItems = 500;
 	private int minCost = 50;
@@ -34,6 +35,10 @@ public class StartupGenCLR implements CommandLineRunner{
 	
 	@Override
 	public void run(String... args) throws Exception {
+		if(enabled) { run2(); }
+	}
+	
+	private void run2() throws Exception {
 		gen = new Generator();
 		
 		if(!customerService.hasCustomers()) { generateBots(); }

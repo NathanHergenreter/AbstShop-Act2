@@ -25,10 +25,6 @@ public class Item {
 	private String shape;
 	private String color;
 
-//    @ManyToOne
-//    @JoinColumn(name = "buyer_id")
-//    private Customer buyer;
-
     @Cascade({CascadeType.ALL})
     @OneToMany(mappedBy = "item")
     private List<Purchase> purchases = new ArrayList<Purchase>();
@@ -46,11 +42,14 @@ public class Item {
 	public int getCost() { return cost; }
 	public String getShape() { return shape; }
 	public String getColor() { return color; }
-//	public Customer getBuyer() { return buyer; }
-//	public void setBuyer(Customer customer) { this.buyer = buyer; }
     public List<Purchase> getPurchases() { return purchases; }
     public Purchase getPurchase(int idx) { return purchases.get(idx); }
     public void addPurchase(Purchase purchase) { purchases.add(purchase); }
-	
-	
+
+//  @ManyToOne
+//  @JoinColumn(name = "buyer_id")
+//  private Customer buyer;
+
+//	public Customer getBuyer() { return buyer; }
+//	public void setBuyer(Customer customer) { this.buyer = buyer; }
 }
