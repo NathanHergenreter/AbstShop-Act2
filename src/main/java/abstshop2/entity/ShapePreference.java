@@ -15,8 +15,8 @@ public class ShapePreference {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    @JoinColumn(name = "ai_id")
+    private BotAI ai;
     
     private String shape;
     private int weight;
@@ -30,8 +30,8 @@ public class ShapePreference {
     }
     
     public long getId() { return id; }
-    public Customer getCustomer() { return customer; }
-    public void setCustomer(Customer customer) { this.customer = customer; }
+    public BotAI getAI() { return ai; }
+    public void setAI(BotAI ai) { this.ai = ai; }
     public String getShape() { return shape; }
     public int getWeight() { return weight; }
 }

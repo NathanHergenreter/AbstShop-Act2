@@ -8,7 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -25,40 +27,34 @@ public class Customer {
     
     private int credits;
     
-    private int patience;
+    @Cascade(CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    private BotAI ai;
     
+//    @Cascade({CascadeType.ALL})
+//    @OneToMany(mappedBy = "buyer")
+//    private List<Item> items = new ArrayList<Item>();
+
     @Cascade({CascadeType.ALL})
     @OneToMany(mappedBy = "buyer")
-    private List<Item> purchases = new ArrayList<Item>();
-
-    @Cascade({CascadeType.ALL})
-    @OneToMany(mappedBy = "customer")
-    private List<ShapePreference> shapePreferences = new ArrayList<ShapePreference>();
-
-    @Cascade({CascadeType.ALL})
-    @OneToMany(mappedBy = "customer")
-    private List<ColorPreference> colorPreferences = new ArrayList<ColorPreference>();
+    private List<Purchase> purchases = new ArrayList<Purchase>();
     
     protected Customer() {}
     
-    public Customer(String name)
-    {
+    public Customer(String name) {
     	this.name = name;
     	this.credits = 0;
-    	this.patience = 0;
     }
     
-    public Customer(String name, int credits)
-    {
+    public Customer(String name, int credits) {
     	this.name = name;
     	this.credits = credits;
-    	this.patience = 0;
     }
     
-    public Customer(String name, int credits, int patience)
-    {
+    public Customer(String name, int credits, BotAI ai) {
     	this(name, credits);
-    	this.patience = patience;
+    	this.ai = ai;
     }
     
     public Long getId() { return id; }
@@ -66,19 +62,13 @@ public class Customer {
     public int getCredits() { return credits; }
     public void setCredits(int credits) { this.credits = credits; }
     public void modCredits(int val) { credits += val; }
-    public List<Item> getPurchases() { return purchases; }
-    public Item getPurchase(int idx) { return purchases.get(idx); }
-    public void addPurchase(Item purchase) { purchases.add(purchase); }
-    public ShapePreference getShapePreference(int idx) { return shapePreferences.get(idx); }
-    public List<ShapePreference> getShapePreferences() { return shapePreferences; }
-    public void addShapePreference(ShapePreference pref) { shapePreferences.add(pref); pref.setCustomer(this); }
-    public ColorPreference getColorPreference(int idx) { return colorPreferences.get(idx); }
-    public List<ColorPreference> getColorPreferences() { return colorPreferences; }
-    public void addColorPreference(ColorPreference pref) { colorPreferences.add(pref); pref.setCustomer(this); }
+//    public List<Item> getItem() { return items; }
+//    public Item getItem(int idx) { return items.get(idx); }
+//    public void addItem(Item item) { items.add(item); }
+    public List<Purchase> getPurchases() { return purchases; }
+    public Purchase getPurchase(int idx) { return purchases.get(idx); }
+    public void addPurchase(Purchase purchase) { purchases.add(purchase); purchase.setBuyer(this); }
+    public BotAI getAI() { return ai; }
+    public void setAI(BotAI ai) { this.ai = ai; }
     
-    @Override
-    public String toString()
-    {
-    	return "id: "+id+" name: "+name+" credits: "+credits;
-    }
 }

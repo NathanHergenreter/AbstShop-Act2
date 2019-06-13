@@ -32,5 +32,5 @@ public class ItemsController {
       return service.findAll().stream().filter(this::noBuyer).collect(Collectors.toList());
     }
     
-    private boolean noBuyer(Item item) { return item.getBuyer() == null; }
+    private boolean noBuyer(Item item) { return item.getPurchases().isEmpty(); }
 }

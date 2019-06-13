@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import abstshop2.entity.BotAI;
 import abstshop2.entity.ColorPreference;
 import abstshop2.entity.Customer;
 import abstshop2.entity.Item;
@@ -15,6 +16,7 @@ public class Generator {
 	private List<String> shapes;
 	private List<String> colors;
 	private int maxPatience = 5;
+	private int maxFrugality = 5;
 	private int minWeight = -2;
 	private int maxWeight = 2;
 	
@@ -31,17 +33,11 @@ public class Generator {
 		
 		for(int i = 0; i < numCustomers; i++)
 		{
-			List<ShapePreference> shapePreferences = genShapePreferences();
-			List<ColorPreference> colorPreferences = genColorPreferences();
-			
 			String name = "";
 			for(int j = 0; j < 4; j++) { name += (char) (rng.nextInt(26) + 97); }
 			name += formattedInt();
 			int credits = rng.nextInt(maxCredits-minCredits) + minCredits;
-			Customer next = new Customer(name, credits, rng.nextInt(maxPatience));
-			
-			for(ShapePreference pref : shapePreferences) { next.addShapePreference(pref); }
-			for(ColorPreference pref : colorPreferences) { next.addColorPreference(pref); }
+			Customer next = new Customer(name, credits, genBotAI());
 			
 			ret.add(next);
 		}
@@ -88,6 +84,19 @@ public class Generator {
 		
 		ret.add("Blue"); ret.add("Red"); ret.add("Yellow"); ret.add("Green"); ret.add("Orange");
 		ret.add("Purple"); ret.add("White"); ret.add("Grey"); ret.add("Black");
+		
+		return ret;
+	}
+	
+	private BotAI genBotAI() 
+	{
+		BotAI ret = new BotAI(rng.nextInt(maxPatience), rng.nextInt(maxFrugality));
+
+		List<ShapePreference> shapePreferences = genShapePreferences();
+		for(ShapePreference pref : shapePreferences) { if(pref.getWeight()!=0 ) ret.addShapePreference(pref); }
+		
+		List<ColorPreference> colorPreferences = genColorPreferences();
+		for(ColorPreference pref : colorPreferences) { if(pref.getWeight()!=0 ) ret.addColorPreference(pref); }
 		
 		return ret;
 	}

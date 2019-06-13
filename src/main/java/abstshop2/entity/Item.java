@@ -1,11 +1,18 @@
 package abstshop2.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 public class Item {
@@ -18,9 +25,13 @@ public class Item {
 	private String shape;
 	private String color;
 
-    @ManyToOne
-    @JoinColumn(name = "buyer_id")
-    private Customer buyer;
+//    @ManyToOne
+//    @JoinColumn(name = "buyer_id")
+//    private Customer buyer;
+
+    @Cascade({CascadeType.ALL})
+    @OneToMany(mappedBy = "item")
+    private List<Purchase> purchases = new ArrayList<Purchase>();
 	
 	protected Item() {}
 	
@@ -28,20 +39,18 @@ public class Item {
 		this.cost = cost;
 		this.shape = shape;
 		this.color = color;
-		this.buyer = null;
+//		this.buyer = null;
 	}
 	
 	public Long getId() { return id; }
 	public int getCost() { return cost; }
 	public String getShape() { return shape; }
 	public String getColor() { return color; }
-	public Customer getBuyer() { return buyer; }
-	public void setBuyer(Customer customer) { this.buyer = buyer; }
+//	public Customer getBuyer() { return buyer; }
+//	public void setBuyer(Customer customer) { this.buyer = buyer; }
+    public List<Purchase> getPurchases() { return purchases; }
+    public Purchase getPurchase(int idx) { return purchases.get(idx); }
+    public void addPurchase(Purchase purchase) { purchases.add(purchase); }
 	
-	@Override
-	public String toString()
-	{
-		String buyerStr = buyer == null ? "None" : buyer.getName();
-		return "id: "+id+" cost: "+cost+" shape: "+shape+" color: "+color+" buyer: "+buyerStr;
-	}
+	
 }
