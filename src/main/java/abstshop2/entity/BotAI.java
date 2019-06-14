@@ -33,7 +33,7 @@ public class BotAI {
 
     //Positive - represents how many sets of items can be shown before bot "loses interest"
     private int patience;
-    //Negative - represents weight in determining when customer no longer feels item is worthwhile for cost
+    //Negative - represents weight in determining when bot no longer feels like spending
     private int frugality;
     
     protected BotAI() {}
@@ -44,6 +44,40 @@ public class BotAI {
     	this.frugality = frugality;
     }
 
+    public ShapePreference getShapePreference(String shape) 
+    { 
+    	for(ShapePreference pref : shapePreferences)
+    	{
+    		if(pref.getShape().compareTo(shape) == 0)
+    			return pref;
+    	}
+    	
+    	return null;
+    }
+
+    public ColorPreference getColorPreference(String color) 
+    { 
+    	for(ColorPreference pref : colorPreferences)
+    	{
+    		if(pref.getColor().compareTo(color) == 0)
+    			return pref;
+    	}
+    	
+    	return null;
+    }
+    
+    public int getShapeWeight(String shape)
+    {
+    	ShapePreference pref = getShapePreference(shape);
+    	return pref != null ? pref.getWeight() : 0;
+    }
+    
+    public int getColorWeight(String color)
+    {
+    	ColorPreference pref = getColorPreference(color);
+    	return pref != null ? pref.getWeight() : 0;
+    }
+    
     public ShapePreference getShapePreference(int idx) { return shapePreferences.get(idx); }
     public List<ShapePreference> getShapePreferences() { return shapePreferences; }
     public void addShapePreference(ShapePreference pref) { shapePreferences.add(pref); pref.setAI(this); }
