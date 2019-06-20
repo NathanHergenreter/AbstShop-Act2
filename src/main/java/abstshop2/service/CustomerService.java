@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import abstshop2.entity.Customer;
+import abstshop2.entity.Item;
+import abstshop2.entity.Purchase;
 import abstshop2.repository.CustomerRepository;
 
 @Service
@@ -27,6 +29,16 @@ public class CustomerService {
     
     public Customer get(long id) {
     	return repo.findById(id).get();
+    }
+    
+    public void update(Customer customer) {
+    	repo.save(customer);
+    }
+    
+    public void makePurchase(Customer customer, Item item) {
+		customer.addPurchase(new Purchase(item));
+		customer.modCredits(-(item.getCost()));
+		update(customer);
     }
     
     public boolean exists(String name) { return get(name) != null; }

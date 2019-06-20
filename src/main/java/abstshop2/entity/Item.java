@@ -25,7 +25,6 @@ public class Item {
 	private String shape;
 	private String color;
 
-    @Cascade({CascadeType.ALL})
     @OneToMany(mappedBy = "item")
     private List<Purchase> purchases = new ArrayList<Purchase>();
 	

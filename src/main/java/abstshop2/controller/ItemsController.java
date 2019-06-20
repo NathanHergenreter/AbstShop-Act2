@@ -29,8 +29,7 @@ public class ItemsController {
     @GetMapping("/available")
     @ResponseBody
     public List<Item> available() {
-      return service.findAll().stream().filter(this::noBuyer).collect(Collectors.toList());
+      return service.findAvailable();
     }
     
-    private boolean noBuyer(Item item) { return item.getPurchases().isEmpty(); }
 }
