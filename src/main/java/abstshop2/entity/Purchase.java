@@ -35,7 +35,7 @@ public class Purchase {
 		this.date = new Date(System.currentTimeMillis());
 	}
 	
-	public long getID() { return id; }
+	public long getId() { return id; }
 	public Date getDate() { return date; }
 	public Customer getBuyer() { return buyer; }
 	public void setBuyer(Customer buyer) { this.buyer = buyer; }

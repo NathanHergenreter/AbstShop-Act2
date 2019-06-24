@@ -1,16 +1,15 @@
 package abstshop2.util;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 import abstshop2.entity.BotAI;
-import abstshop2.entity.ColorPreference;
 import abstshop2.entity.Customer;
 import abstshop2.entity.Item;
-import abstshop2.entity.ShapePreference;
 
 public class AutoPurchaser {
 
+	private int prefWt = 8;
+	
 	public AutoPurchaser() { }
 	
 	//Pre-condition: Items are sorted based on determined likely purchases
@@ -34,7 +33,8 @@ public class AutoPurchaser {
 				int boundPref = boundPreference(buyer.getBaseCredits(), ai.getColorWeight(item.getColor()), 
 								ai.getShapeWeight(item.getShape()));
 				
-				if(worthwhile(item.getCost(), boundFrugality, boundPref))
+				if(item.getCost() <= credits
+				&& worthwhile(item.getCost(), boundFrugality, boundPref))
 				{
 					ret.add(item);
 					credits -= item.getCost();
@@ -65,15 +65,15 @@ public class AutoPurchaser {
 		switch(frugality)
 		{
 			case 0:
-				return (baseCredits*10)/100;
-			case 1:
-				return (baseCredits*15)/100;
-			case 2:
 				return (baseCredits*25)/100;
-			case 3:
+			case 1:
 				return (baseCredits*33)/100;
+			case 2:
+				return (baseCredits*45)/100;
+			case 3:
+				return (baseCredits*60)/100;
 			default:
-				return (baseCredits*40)/100;
+				return (baseCredits*75)/100;
 		}
 	}
 	
@@ -85,8 +85,8 @@ public class AutoPurchaser {
 	private int boundPreference(int baseCredits, int colorWt, int shapeWt)
 	{
 		int ret = baseCredits/4;
-		ret += (baseCredits*(colorWt*5))/100;
-		ret += (baseCredits*(shapeWt*5))/100;
+		ret += (baseCredits*(colorWt*prefWt))/100;
+		ret += (baseCredits*(shapeWt*prefWt))/100;
 		
 		return ret;
 	}

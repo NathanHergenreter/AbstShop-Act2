@@ -111,12 +111,12 @@ public class Generator {
 		int num = rng.nextInt(shapes.size());
 		while(num > 0) {
 			int idx = rng.nextInt(remShapes.size());
-			ret.add(new ShapePreference(shapes.get(idx), rng.nextInt(maxWeight-minWeight+1)+minWeight));
+			ret.add(new ShapePreference(shapes.get(remShapes.get(idx)), rng.nextInt(maxWeight-minWeight+1)+minWeight));
 			remShapes.remove(idx);
 			num--;
 		}
 		
-		return ret;
+		return ret.size() > 1 ? orderedShapePreferences(ret) : ret;
 	}
 
 	private List<ColorPreference> genColorPreferences() 
@@ -129,9 +129,56 @@ public class Generator {
 		int num = rng.nextInt(colors.size());
 		while(num > 0) {
 			int idx = rng.nextInt(remColors.size());
-			ret.add(new ColorPreference(colors.get(idx), rng.nextInt(maxWeight-minWeight+1)+minWeight));
+			ret.add(new ColorPreference(colors.get(remColors.get(idx)), rng.nextInt(maxWeight-minWeight+1)+minWeight));
 			remColors.remove(idx);
 			num--;
+		}
+		
+		return ret.size() > 1 ? orderedColorPreferences(ret) : ret;
+	}
+	
+	private List<ShapePreference> orderedShapePreferences(List<ShapePreference> unordered)
+	{
+		List<ShapePreference> ret = new ArrayList<ShapePreference>();
+		
+		int cur = 0; int max = 0;
+		while(unordered.size() > 0)
+		{
+			if(cur == unordered.size())
+			{
+				ret.add(unordered.get(max));
+				unordered.remove(max);
+				cur = 0;
+				max = 0;
+			}
+			else if(unordered.get(cur).getWeight() > unordered.get(max).getWeight())
+			{ max = cur; }
+			else { cur++; }
+		}
+		
+		return ret;
+	}
+
+	//Bad code :(
+	//Should've made a higher level Preference class
+	//Like, REALLY should have :thinking:
+	private List<ColorPreference> orderedColorPreferences(List<ColorPreference> unordered)
+	{
+		List<ColorPreference> ret = new ArrayList<ColorPreference>();
+		
+		int cur = 0; int max = 0;
+		while(unordered.size() > 0)
+		{
+			if(cur == unordered.size())
+			{
+				ret.add(unordered.get(max));
+				unordered.remove(max);
+				cur = 0;
+				max = 0;
+			}
+			else if(unordered.get(cur).getWeight() > unordered.get(max).getWeight())
+			{ max = cur; }
+			else { cur++; }
 		}
 		
 		return ret;

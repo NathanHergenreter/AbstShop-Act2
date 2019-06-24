@@ -1,0 +1,50 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+    <head>
+        <title>AbstShop</title>
+        <link rel="stylesheet" type="text/css" href="../static/css/test.css" th:href="@{/css/test.css}" />
+    </head>
+    
+    <body>
+        <h1 th:text="${result}"></h1>
+        
+        <table>
+        	<tbody>
+        		<tr>
+        			<td>Total Purchases: <span th:text="${results.totalPurchases}"/></td>
+        		</tr>
+        		<tr>
+        			<td>Total Spent: <span th:text="${results.totalSpent}"/></td>
+        		</tr>
+        	</tbody>
+        </table>
+        
+        <table>
+        	<tbody>
+           		<thead>
+	                <tr>
+	                    <th>Buyer</th>
+	                    <th>Item Shape</th>
+	                    <th>Item Color</th>
+	                    <th>Item Cost</th>
+	                </tr>
+           		</thead>
+        		<tr th:each="purchase : ${results.purchases}">
+        			<td>
+        				<a th:text="${purchase.buyer.name}">text</a>
+        			</td>
+        			<td>
+        				<a th:text="${purchase.item.shape}">text</a>
+        			</td>
+        			<td>
+        				<a th:text="${purchase.item.color}">text</a>
+        			</td>
+        			<td>
+        				<a th:text="${purchase.item.cost}">text</a>
+        			</td>
+        		</tr>
+        	</tbody>
+        </table>
+    </body>
+    
+</html>

@@ -38,6 +38,9 @@ public class CustomersController {
     	Customer customer = service.get(id);
     	model.addAttribute("customer", customer);
     	model.addAttribute("purchases", customer.getPurchases());
+    	model.addAttribute("ai", customer.getAI());
+    	model.addAttribute("shapePreferences", customer.getAI().getShapePreferences());
+    	model.addAttribute("colorPreferences", customer.getAI().getColorPreferences());
     	return "customer-page";
     }
 }

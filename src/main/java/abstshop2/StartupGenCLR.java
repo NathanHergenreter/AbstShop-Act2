@@ -23,7 +23,7 @@ public class StartupGenCLR implements CommandLineRunner{
 	private int numItems = 500;
 	private int minCost = 50;
 	private int maxCost = 500;
-	private int creditMult = 10;
+	private int creditMult = 2;
 	
 	@Autowired
 	private CustomerService customerService;

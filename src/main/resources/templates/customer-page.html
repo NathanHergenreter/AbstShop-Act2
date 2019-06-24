@@ -11,8 +11,70 @@
         <table>
         	<tbody>
         		<tr>
-        			<a>Number of Credits: </a>
-        			<a th:text="${customer.credits}">text</a>
+        			<td>Income: <span th:text="${customer.baseCredits}"/></td>
+        		</tr>
+        		<tr>
+        			<td>Number of Credits: <span th:text="${customer.credits}"/></td>
+        		</tr>
+        		<tr>
+        			<td>Patience: <span th:text="${ai.patience}"/></td>
+        		</tr>
+        		<tr>
+        			<td>Frugality: <span th:text="${ai.frugality}"/></td>
+        		</tr>
+        	</tbody>
+        </table>
+        
+        <table>
+        	<tbody>
+           		<thead>
+	                <tr>
+	                    <th>Preference</th>
+	                    <th>Weight</th>
+	                </tr>
+           		</thead>
+        		<tr th:each="shapePreference : ${shapePreferences}">
+        			<td>
+        				<a th:text="${shapePreference.shape}">text</a>
+        			</td>
+        			<td>
+        				<a th:text="${shapePreference.weight}">text</a>
+        			</td>
+        		</tr>
+        		<tr th:each="colorPreference : ${colorPreferences}">
+        			<td>
+        				<a th:text="${colorPreference.color}">text</a>
+        			</td>
+        			<td>
+        				<a th:text="${colorPreference.weight}">text</a>
+        			</td>
+        		</tr>
+        	</tbody>
+        </table>
+        
+        <table>
+        	<tbody>
+           		<thead>
+	                <tr>
+	                    <th>Item Shape</th>
+	                    <th>Item Color</th>
+	                    <th>Item Cost</th>
+	                    <th>Purchase Date</th>
+	                </tr>
+           		</thead>
+        		<tr th:each="purchase : ${purchases}">
+        			<td>
+        				<a th:text="${purchase.item.shape}">text</a>
+        			</td>
+        			<td>
+        				<a th:text="${purchase.item.color}">text</a>
+        			</td>
+        			<td>
+        				<a th:text="${purchase.item.cost}">text</a>
+        			</td>
+        			<td>
+        				<a th:text="${purchase.date}">text</a>
+        			</td>
         		</tr>
         	</tbody>
         </table>

@@ -35,10 +35,21 @@ public class CustomerService {
     	repo.save(customer);
     }
     
-    public void makePurchase(Customer customer, Item item) {
-		customer.addPurchase(new Purchase(item));
+    public Purchase makePurchase(Customer customer, Item item) {
+    	Purchase purchase = new Purchase(item);
+		customer.addPurchase(purchase);
 		customer.modCredits(-(item.getCost()));
 		update(customer);
+		
+		return purchase;
+    }
+    
+    public int pay(Customer customer)
+    {
+    	customer.modCredits(customer.getBaseCredits());
+    	update(customer);
+    	
+    	return customer.getBaseCredits();
     }
     
     public boolean exists(String name) { return get(name) != null; }
