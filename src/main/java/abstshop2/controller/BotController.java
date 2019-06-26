@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import abstshop2.entity.Customer;
 import abstshop2.entity.Item;
 import abstshop2.entity.Purchase;
+import abstshop2.entity.RunResults;
 import abstshop2.service.CustomerService;
 import abstshop2.service.ItemService;
+import abstshop2.service.RunResultsService;
 import abstshop2.util.BotRunner;
 
 @Controller
@@ -28,6 +30,9 @@ public class BotController {
 	CustomerService botService;
 	@Autowired
 	ItemService itemService;
+	@Autowired
+	RunResultsService runResultsService;
+	
 	BotRunner runner = new BotRunner();
 	
 	@GetMapping("all/run/random")
@@ -41,20 +46,21 @@ public class BotController {
 	
     @PostMapping("/all/run/random")
     @ResponseStatus(value = HttpStatus.OK)
-    public runResults allRunRandom() 
+    public RunResults allRunRandom() 
     {
-    	int total = 0;
     	List<Customer> bots = botService.findAll();
-    	List<Purchase> purchases = new ArrayList<Purchase>();
+    	RunResults ret = new RunResults(runResultsService.count());
+    	runResultsService.add(ret);
     	
     	for(Customer bot : bots)
     	{
     		ArrayList<Item> options = new ArrayList<Item>(itemService.findAvailable());
     		ArrayList<Item> choices = runner.purchaseRandom(bot, options);
-        	for(Item item : choices) { purchases.add(botService.makePurchase(bot, item)); total += item.getCost(); }
+        	for(Item item : choices) { ret.addPurchase(botService.makePurchase(bot, item)); }
     	}
-    	
-    	return new runResults(total, purchases);
+
+    	runResultsService.update(ret);
+    	return ret;
     }
 
 	@GetMapping("all/pay")
@@ -70,23 +76,5 @@ public class BotController {
     {
     	List<Customer> bots = botService.findAll();
     	for(Customer bot : bots) { botService.pay(bot); }
-    }
-    
-    private class runResults
-    {
-    	private int totalSpent;
-    	private int totalPurchases;
-    	private List<Purchase> purchases;
-    	
-    	private runResults(int totalSpent, List<Purchase> purchases)
-    	{
-    		this.totalSpent = totalSpent;
-    		this.totalPurchases = purchases.size();
-    		this.purchases = purchases;
-    	}
-    	
-    	public int getTotalSpent() { return totalSpent; }
-    	public int getTotalPurchases() { return totalPurchases; }
-    	public List<Purchase> getPurchases() { return purchases; }
     }
 }

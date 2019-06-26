@@ -25,6 +25,10 @@ public class Purchase {
     @ManyToOne
     @JoinColumn(name = "item_id")
     private Item item;
+
+    @ManyToOne
+    @JoinColumn(name = "set_id")
+    private RunResults set;
     
 	protected Purchase() {}
 	
@@ -40,4 +44,6 @@ public class Purchase {
 	public Customer getBuyer() { return buyer; }
 	public void setBuyer(Customer buyer) { this.buyer = buyer; }
 	public Item getItem() { return item; }
+	public RunResults getSet() { return set; }
+	public void setSet(RunResults set) { this.set = set; }
 }
